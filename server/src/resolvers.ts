@@ -2,7 +2,8 @@ import { createUser } from "./mutations/users/createUser.js";
 import { signIn } from "./mutations/users/signIn.js";
 import { Resolvers, Speciality } from "./types.js";
 import { getClosestColor } from "./utils/colors.js";
-
+import { getArticles,getArticle } from "./services/Article.js";
+import { createArticle,updateArticle, deleteArticle, commentArticle,likeArticle,removeLikeArticle } from "./services/Article.js";
 const doctorsData = [
   {
     name: 'Samia Mekame',
@@ -40,6 +41,8 @@ export const resolvers: Resolvers = {
     },
     getFilms: (_, __, {dataSources: {ghibliAPI}}) => ghibliAPI.getFilms(),
     getPeople: (_, __, {dataSources: {ghibliAPI}}) => ghibliAPI.getPeople(),
+    getArticles,
+    getArticle
   },
   Mutation: {
     incrementTrackView: async (_, {id}, {dataSources: {trackAPI}}) => {
@@ -85,6 +88,12 @@ export const resolvers: Resolvers = {
     },
     createUser,
     signIn,
+    createArticle,
+    updateArticle,
+    deleteArticle,
+    commentArticle,
+    likeArticle,
+    removeLikeArticle
   },
   Track: {
     author: (parent, _, {dataSources}) => {

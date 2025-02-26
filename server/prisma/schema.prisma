@@ -20,6 +20,12 @@ model TodoList {
   user      User      @relation(fields: [userId], references: [id])
   userId    String
 }
+model TodoItem {
+  id          String   @id @unique @default(uuid())
+  description String
+  todoList    TodoList @relation(fields: [todoListId], references: [id])
+  todoListId  String
+}
 
 model Comment {
     id        String     @id @unique @default(uuid())
@@ -47,13 +53,6 @@ model Article {
     comments Comment[]
     likes Like[]
     
-}
-
-model TodoItem {
-  id          String   @id @unique @default(uuid())
-  description String
-  todoList    TodoList @relation(fields: [todoListId], references: [id])
-  todoListId  String
 }
 
 model User {

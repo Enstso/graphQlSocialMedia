@@ -11,7 +11,7 @@ export const typeDefs = gql`
     getTracks: [Track!]!
     getFilms: [Film]!
     getPeople: [People]!
-    getArticles: [Article]
+    getArticles: [Article]!
     getArticle(id: ID!): Article
   }
 
@@ -60,21 +60,22 @@ export const typeDefs = gql`
         success: Boolean!
         message: String!
         comment: Comment
-    }
+  }
 
-    type LikeResponse {
-        code: Int!
-        success: Boolean!
-        message: String!
-        like: Like
-    }
+  type LikeResponse {
+      code: Int!
+      success: Boolean!
+      message: String!
+      like: Like
+  }
   
-     type ArticleResponse {
-        code: Int!
-        success: Boolean!
-        message: String!
-        article: Article
-    }
+  type ArticleResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    article: Article
+  }
+
   type User {
     id: ID!
     username: String!
@@ -105,6 +106,27 @@ export const typeDefs = gql`
     PSYCHOLOGIST
     OPHTALMOLOGIST
   }
+
+  type Article {
+        id: ID!
+        title: String!
+        content: String!
+        author: User!
+        comments: [Comment]
+        likes: [Like]
+    }
+ type Comment {
+        id: ID!
+        content: String!
+        author: User!
+        article: Article!
+    }
+
+    type Like {
+        id: ID!
+        user: User!
+        article: Article!
+    }
 
   type Film {
     id: ID
