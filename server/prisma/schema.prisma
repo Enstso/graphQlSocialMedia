@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -19,6 +19,34 @@ model TodoList {
   todoItems TodoItem[]
   user      User      @relation(fields: [userId], references: [id])
   userId    String
+}
+
+model Comment {
+    id        String     @id @unique @default(uuid())
+    content String
+    article   Article @relation(fields: [articleId], references: [id])
+    articleId String
+    author    User    @relation(fields: [authorId], references: [id])
+    authorId String
+}
+
+model Like {
+  id        String     @id @unique @default(uuid())
+  article   Article @relation(fields: [articleId], references: [id])
+  articleId String
+  user      User    @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Article {
+    id        String     @id @unique @default(uuid())
+    title String
+    content String
+    author   User      @relation(fields: [authorId], references: [id])
+    authorId String
+    comments Comment[]
+    likes Like[]
+    
 }
 
 model TodoItem {
@@ -32,5 +60,8 @@ model User {
   id        String     @id @unique @default(uuid())
   username  String     @unique
   password  String
+  articles Article[]
+  likes Like[]
+  comments Comment[]
   todoLists TodoList[]
 }
