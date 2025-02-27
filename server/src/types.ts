@@ -118,6 +118,7 @@ export type Mutation = {
   createArticle?: Maybe<ArticleResponse>;
   createUser: CreateUserResponse;
   deleteArticle?: Maybe<ArticleResponse>;
+  deleteComment?: Maybe<CommentResponse>;
   incrementNumberOfLikes: IncrementNumberOfLikesReponse;
   incrementTrackView: IncrementTrackViewReponse;
   likeArticle?: Maybe<LikeResponse>;
@@ -146,6 +147,11 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteArticleArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteCommentArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -198,7 +204,9 @@ export type Query = {
   doctors?: Maybe<Array<Maybe<Doctor>>>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Maybe<Article>>;
+  getCommentsByArticle: Array<Maybe<Comment>>;
   getFilms: Array<Maybe<Film>>;
+  getLikesByArticle: Array<Maybe<Like>>;
   getPeople: Array<Maybe<People>>;
   getTracks: Array<Track>;
   multiply: Scalars['Float']['output'];
@@ -229,6 +237,16 @@ export type QueryDoctorsArgs = {
 
 
 export type QueryGetArticleArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetCommentsByArticleArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryGetLikesByArticleArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -496,6 +514,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createArticle?: Resolver<Maybe<ResolversTypes['ArticleResponse']>, ParentType, ContextType, RequireFields<MutationCreateArticleArgs, 'content' | 'title'>>;
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;
   deleteArticle?: Resolver<Maybe<ResolversTypes['ArticleResponse']>, ParentType, ContextType, RequireFields<MutationDeleteArticleArgs, 'id'>>;
+  deleteComment?: Resolver<Maybe<ResolversTypes['CommentResponse']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
   incrementNumberOfLikes?: Resolver<ResolversTypes['IncrementNumberOfLikesReponse'], ParentType, ContextType, RequireFields<MutationIncrementNumberOfLikesArgs, 'id'>>;
   incrementTrackView?: Resolver<ResolversTypes['IncrementTrackViewReponse'], ParentType, ContextType, RequireFields<MutationIncrementTrackViewArgs, 'id'>>;
   likeArticle?: Resolver<Maybe<ResolversTypes['LikeResponse']>, ParentType, ContextType, RequireFields<MutationLikeArticleArgs, 'id'>>;
@@ -519,7 +538,9 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   doctors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Doctor']>>>, ParentType, ContextType, Partial<QueryDoctorsArgs>>;
   getArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryGetArticleArgs, 'id'>>;
   getArticles?: Resolver<Array<Maybe<ResolversTypes['Article']>>, ParentType, ContextType>;
+  getCommentsByArticle?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType, RequireFields<QueryGetCommentsByArticleArgs, 'id'>>;
   getFilms?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
+  getLikesByArticle?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByArticleArgs, 'id'>>;
   getPeople?: Resolver<Array<Maybe<ResolversTypes['People']>>, ParentType, ContextType>;
   getTracks?: Resolver<Array<ResolversTypes['Track']>, ParentType, ContextType>;
   multiply?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryMultiplyArgs, 'number1' | 'number2'>>;

@@ -13,7 +13,10 @@ export const typeDefs = gql`
     getPeople: [People]!
     getArticles: [Article]!
     getArticle(id: ID!): Article
-  }
+    getCommentsByArticle(id: ID!): [Comment]!
+    getLikesByArticle(id:ID!) : [Like]!
+  
+    }
 
   type Mutation {
     incrementTrackView(id: ID!): IncrementTrackViewReponse!
@@ -26,6 +29,7 @@ export const typeDefs = gql`
     likeArticle(id: ID!): LikeResponse
     removeLikeArticle(id: ID!): LikeResponse
     commentArticle(articleId: ID!, content: String!): CommentResponse
+    deleteComment(id:ID!):  CommentResponse
     }
 
   type IncrementTrackViewReponse {

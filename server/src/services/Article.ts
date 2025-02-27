@@ -7,63 +7,35 @@ export const getArticle: QueryResolvers["getArticle"] = async (
 ) => {
   return context.dataSources.db.article.findUnique({
     where: { id },
-    include: {
-      author: true,
-      comments: {
-        include: {
-          author: true,
-          article: {
-            include: {
-              author: true,
-            },
-          },
-        },
-      },
-      likes: {
-        include: {
-          user: true,
-          article: {
-            include: {
-              author: true,
-            },
-          },
-        },
-      },
-    },
+    include: { author: true },
   });
 };
 
 export const getArticles: QueryResolvers["getArticles"] = async (
   _,
-  __,
+__,
   context
 ) => {
-  return context.dataSources.db.article.findMany({
-    include: {
-      author: true,
-      comments: {
-        include: {
-          author: true,
-          article: {
-            include: {
-              author: true,
-            },
-          },
-        },
-      },
-      likes: {
-        include: {
-          user: true,
-          article: {
-            include: {
-              author: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  return context.dataSources.db.article.findMany({ include: { author: true } });
 };
+
+export const getCommentsByArticle:QueryResolvers['getCommentsByArticle'] = async (_,{id},context)=>{
+  return context.dataSources.db.comment.findMany({
+    where:{articleId:id},
+    include:{author:true,article:{include:{
+      author:true
+    }}}
+  });
+}
+
+export const getLikesByArticle: QueryResolvers["getLikesByArticle"] = async (_,{id},context)=>{
+  return context.dataSources.db.like.findMany({
+    where:{articleId:id},
+    include:{user:true,article:{include:{
+      author:true
+    }}}
+  });
+}
 
 export const createArticle: MutationResolvers["createArticle"] = async (
   _,
@@ -371,7 +343,7 @@ export const commentArticle: MutationResolvers["commentArticle"] = async (
       code: 200,
       success: true,
       message: "Comment",
-      comment
+      comment,
     };
   } catch {
     return {
@@ -380,4 +352,46 @@ export const commentArticle: MutationResolvers["commentArticle"] = async (
       message: "Comment",
     };
   }
+};
+
+export const deleteComment: MutationResolvers["deleteComment"] = async (
+  _,
+  { id },
+  { dataSources, user }
+) => {
+  if (!user) {
+    return {
+      code: 401,
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+  try {
+    const comment = await dataSources.db.comment.findFirst({
+      where: { id:id }
+    });
+
+    if(!comment){
+      return {
+        code:400,
+        success: false,
+        message:"comment"
+      };
+    }
+
+    await dataSources.db.comment.delete({
+      where:{id:comment.id},
+    });
+    return {
+      code:200,
+      success:true,
+      message:"comment removed"
+    };
+  } catch (error) {
+    return {
+      code: 500,
+      success: false,
+      message: "Internal server error",
+    };
+  }  
 };
