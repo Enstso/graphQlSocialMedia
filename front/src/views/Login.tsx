@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormLogin from '../components/authentification/FormLogin';
+import FormLogin from '../components/authentication/FormLogin';
 import { useNavigate } from 'react-router-dom'; // Si tu utilises React Router
 
 export default function Login() {
