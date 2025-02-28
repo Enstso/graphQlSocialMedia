@@ -1,3 +1,4 @@
+import { QueryResolvers, MutationResolvers } from "../../types";
 
 export const likeArticle: MutationResolvers["likeArticle"] = async (
   _,

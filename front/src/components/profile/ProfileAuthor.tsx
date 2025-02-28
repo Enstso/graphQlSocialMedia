@@ -1,14 +1,30 @@
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { X } from "lucide-react";
+import { useQuery } from "@apollo/client";
+import { graphql } from "../../gql/gql";
+
+const GET_PROFILE = graphql(`
+  query GetProfile($username: String!) {
+    getProfile(username: $username) {
+      photo
+      username
+    }
+  }
+`);
 
 type ProfileModalProps = {
   username: string;
-  profilePic: string;
 };
 
-export default function ProfileAuthorModal({ username, profilePic }: ProfileModalProps) {
+export default function ProfileAuthorModal({ username }: ProfileModalProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { data, loading, error } = useQuery(GET_PROFILE, {
+    variables: { username },
+    skip: !isOpen, // Évite de lancer la requête avant ouverture
+  });
+
+  const profile = data?.getProfile; // Stocke la valeur pour éviter de répéter les vérifications
 
   return (
     <>
@@ -27,8 +43,19 @@ export default function ProfileAuthorModal({ username, profilePic }: ProfileModa
           >
             <X size={24} />
           </button>
-          <img src={profilePic} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-300" />
-          <h2 className="mt-4 text-xl font-semibold text-gray-900">{username}</h2>
+
+          {loading ? (
+            <p className="text-gray-500">Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">Error loading profile</p>
+          ) : profile ? ( // Vérification explicite ici
+            <>
+              <img src={profile.photo ?? ''} alt="Profile" className="w-24 h-24 rounded-full object-cover border-4 border-gray-300" />
+              <h2 className="mt-4 text-xl font-semibold text-gray-900">{profile.username}</h2>
+            </>
+          ) : (
+            <p className="text-gray-500">Profile not found</p> // Gestion du cas où `getProfile` est null
+          )}
         </div>
       </Dialog>
     </>

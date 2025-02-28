@@ -8,7 +8,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -61,35 +60,6 @@ export type CreateUserResponse = {
   user?: Maybe<User>;
 };
 
-export type Doctor = {
-  __typename?: 'Doctor';
-  name?: Maybe<Scalars['String']['output']>;
-  speciality?: Maybe<Speciality>;
-};
-
-export type Film = {
-  __typename?: 'Film';
-  id?: Maybe<Scalars['ID']['output']>;
-  people: Array<Maybe<People>>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
-export type IncrementNumberOfLikesReponse = {
-  __typename?: 'IncrementNumberOfLikesReponse';
-  code: Scalars['Int']['output'];
-  message: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
-  track?: Maybe<Track>;
-};
-
-export type IncrementTrackViewReponse = {
-  __typename?: 'IncrementTrackViewReponse';
-  code: Scalars['Int']['output'];
-  message: Scalars['String']['output'];
-  success: Scalars['Boolean']['output'];
-  track?: Maybe<Track>;
-};
-
 export type Like = {
   __typename?: 'Like';
   article: Article;
@@ -112,8 +82,6 @@ export type Mutation = {
   createUser: CreateUserResponse;
   deleteArticle?: Maybe<ArticleResponse>;
   deleteComment?: Maybe<CommentResponse>;
-  incrementNumberOfLikes: IncrementNumberOfLikesReponse;
-  incrementTrackView: IncrementTrackViewReponse;
   likeArticle?: Maybe<LikeResponse>;
   removeLikeArticle?: Maybe<LikeResponse>;
   signIn: SignInResponse;
@@ -149,16 +117,6 @@ export type MutationDeleteCommentArgs = {
 };
 
 
-export type MutationIncrementNumberOfLikesArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationIncrementTrackViewArgs = {
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationLikeArticleArgs = {
   id: Scalars['ID']['input'];
 };
@@ -181,53 +139,14 @@ export type MutationUpdateArticleArgs = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type People = {
-  __typename?: 'People';
-  eyeColor?: Maybe<Scalars['String']['output']>;
-  films: Array<Maybe<Film>>;
-  id?: Maybe<Scalars['ID']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-};
-
 export type Query = {
   __typename?: 'Query';
-  add: Scalars['Float']['output'];
-  closestColor?: Maybe<Scalars['String']['output']>;
-  divide?: Maybe<Scalars['Float']['output']>;
-  doctors?: Maybe<Array<Maybe<Doctor>>>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Maybe<Article>>;
   getArticlesByAuthor: Array<Maybe<Article>>;
   getCommentsByArticle: Array<Maybe<Comment>>;
-  getFilms: Array<Maybe<Film>>;
   getLikesByArticle: Array<Maybe<Like>>;
-  getPeople: Array<Maybe<People>>;
   getProfile?: Maybe<User>;
-  getTracks: Array<Track>;
-  multiply: Scalars['Float']['output'];
-  substract: Scalars['Float']['output'];
-};
-
-
-export type QueryAddArgs = {
-  number1: Scalars['Float']['input'];
-  number2: Scalars['Float']['input'];
-};
-
-
-export type QueryClosestColorArgs = {
-  hexa: Scalars['String']['input'];
-};
-
-
-export type QueryDivideArgs = {
-  number1: Scalars['Float']['input'];
-  number2: Scalars['Float']['input'];
-};
-
-
-export type QueryDoctorsArgs = {
-  specialities?: InputMaybe<Array<Speciality>>;
 };
 
 
@@ -250,40 +169,12 @@ export type QueryGetProfileArgs = {
   username: Scalars['String']['input'];
 };
 
-
-export type QueryMultiplyArgs = {
-  number1: Scalars['Float']['input'];
-  number2: Scalars['Float']['input'];
-};
-
-
-export type QuerySubstractArgs = {
-  number1: Scalars['Float']['input'];
-  number2: Scalars['Float']['input'];
-};
-
 export type SignInResponse = {
   __typename?: 'SignInResponse';
   code: Scalars['Int']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
   token?: Maybe<Scalars['String']['output']>;
-};
-
-export enum Speciality {
-  Ophtalmologist = 'OPHTALMOLOGIST',
-  Psychologist = 'PSYCHOLOGIST'
-}
-
-export type Track = {
-  __typename?: 'Track';
-  author?: Maybe<User>;
-  description: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  numberOfLikes?: Maybe<Scalars['Int']['output']>;
-  numberOfViews?: Maybe<Scalars['Int']['output']>;
-  thumbnail: Scalars['String']['output'];
-  title: Scalars['String']['output'];
 };
 
 export type User = {
@@ -370,22 +261,14 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   CommentResponse: ResolverTypeWrapper<CommentResponse>;
   CreateUserResponse: ResolverTypeWrapper<CreateUserResponse>;
-  Doctor: ResolverTypeWrapper<Doctor>;
-  Film: ResolverTypeWrapper<FilmModel>;
-  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  IncrementNumberOfLikesReponse: ResolverTypeWrapper<Omit<IncrementNumberOfLikesReponse, 'track'> & { track?: Maybe<ResolversTypes['Track']> }>;
-  IncrementTrackViewReponse: ResolverTypeWrapper<Omit<IncrementTrackViewReponse, 'track'> & { track?: Maybe<ResolversTypes['Track']> }>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Like: ResolverTypeWrapper<Like>;
   LikeResponse: ResolverTypeWrapper<LikeResponse>;
   Mutation: ResolverTypeWrapper<{}>;
-  People: ResolverTypeWrapper<PeopleModel>;
   Query: ResolverTypeWrapper<{}>;
   SignInResponse: ResolverTypeWrapper<SignInResponse>;
-  Speciality: Speciality;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
-  Track: ResolverTypeWrapper<TrackModel>;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -397,21 +280,14 @@ export type ResolversParentTypes = {
   Comment: Comment;
   CommentResponse: CommentResponse;
   CreateUserResponse: CreateUserResponse;
-  Doctor: Doctor;
-  Film: FilmModel;
-  Float: Scalars['Float']['output'];
   ID: Scalars['ID']['output'];
-  IncrementNumberOfLikesReponse: Omit<IncrementNumberOfLikesReponse, 'track'> & { track?: Maybe<ResolversParentTypes['Track']> };
-  IncrementTrackViewReponse: Omit<IncrementTrackViewReponse, 'track'> & { track?: Maybe<ResolversParentTypes['Track']> };
   Int: Scalars['Int']['output'];
   Like: Like;
   LikeResponse: LikeResponse;
   Mutation: {};
-  People: PeopleModel;
   Query: {};
   SignInResponse: SignInResponse;
   String: Scalars['String']['output'];
-  Track: TrackModel;
   User: User;
 };
 
@@ -457,35 +333,6 @@ export type CreateUserResponseResolvers<ContextType = Context, ParentType extend
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DoctorResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Doctor'] = ResolversParentTypes['Doctor']> = {
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  speciality?: Resolver<Maybe<ResolversTypes['Speciality']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type FilmResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Film'] = ResolversParentTypes['Film']> = {
-  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  people?: Resolver<Array<Maybe<ResolversTypes['People']>>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type IncrementNumberOfLikesReponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['IncrementNumberOfLikesReponse'] = ResolversParentTypes['IncrementNumberOfLikesReponse']> = {
-  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  track?: Resolver<Maybe<ResolversTypes['Track']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type IncrementTrackViewReponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['IncrementTrackViewReponse'] = ResolversParentTypes['IncrementTrackViewReponse']> = {
-  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  track?: Resolver<Maybe<ResolversTypes['Track']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type LikeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
   article?: Resolver<ResolversTypes['Article'], ParentType, ContextType>;
   author?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
@@ -507,38 +354,19 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createUser?: Resolver<ResolversTypes['CreateUserResponse'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'password' | 'username'>>;
   deleteArticle?: Resolver<Maybe<ResolversTypes['ArticleResponse']>, ParentType, ContextType, RequireFields<MutationDeleteArticleArgs, 'id'>>;
   deleteComment?: Resolver<Maybe<ResolversTypes['CommentResponse']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
-  incrementNumberOfLikes?: Resolver<ResolversTypes['IncrementNumberOfLikesReponse'], ParentType, ContextType, RequireFields<MutationIncrementNumberOfLikesArgs, 'id'>>;
-  incrementTrackView?: Resolver<ResolversTypes['IncrementTrackViewReponse'], ParentType, ContextType, RequireFields<MutationIncrementTrackViewArgs, 'id'>>;
   likeArticle?: Resolver<Maybe<ResolversTypes['LikeResponse']>, ParentType, ContextType, RequireFields<MutationLikeArticleArgs, 'id'>>;
   removeLikeArticle?: Resolver<Maybe<ResolversTypes['LikeResponse']>, ParentType, ContextType, RequireFields<MutationRemoveLikeArticleArgs, 'id'>>;
   signIn?: Resolver<ResolversTypes['SignInResponse'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'password' | 'username'>>;
   updateArticle?: Resolver<Maybe<ResolversTypes['ArticleResponse']>, ParentType, ContextType, RequireFields<MutationUpdateArticleArgs, 'id'>>;
 };
 
-export type PeopleResolvers<ContextType = Context, ParentType extends ResolversParentTypes['People'] = ResolversParentTypes['People']> = {
-  eyeColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  films?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  add?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryAddArgs, 'number1' | 'number2'>>;
-  closestColor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<QueryClosestColorArgs, 'hexa'>>;
-  divide?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType, RequireFields<QueryDivideArgs, 'number1' | 'number2'>>;
-  doctors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Doctor']>>>, ParentType, ContextType, Partial<QueryDoctorsArgs>>;
   getArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryGetArticleArgs, 'id'>>;
   getArticles?: Resolver<Array<Maybe<ResolversTypes['Article']>>, ParentType, ContextType>;
   getArticlesByAuthor?: Resolver<Array<Maybe<ResolversTypes['Article']>>, ParentType, ContextType>;
   getCommentsByArticle?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType, RequireFields<QueryGetCommentsByArticleArgs, 'id'>>;
-  getFilms?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
   getLikesByArticle?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByArticleArgs, 'id'>>;
-  getPeople?: Resolver<Array<Maybe<ResolversTypes['People']>>, ParentType, ContextType>;
   getProfile?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'username'>>;
-  getTracks?: Resolver<Array<ResolversTypes['Track']>, ParentType, ContextType>;
-  multiply?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryMultiplyArgs, 'number1' | 'number2'>>;
-  substract?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QuerySubstractArgs, 'number1' | 'number2'>>;
 };
 
 export type SignInResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SignInResponse'] = ResolversParentTypes['SignInResponse']> = {
@@ -546,17 +374,6 @@ export type SignInResponseResolvers<ContextType = Context, ParentType extends Re
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type TrackResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = {
-  author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  numberOfLikes?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  numberOfViews?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  thumbnail?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -573,17 +390,11 @@ export type Resolvers<ContextType = Context> = {
   Comment?: CommentResolvers<ContextType>;
   CommentResponse?: CommentResponseResolvers<ContextType>;
   CreateUserResponse?: CreateUserResponseResolvers<ContextType>;
-  Doctor?: DoctorResolvers<ContextType>;
-  Film?: FilmResolvers<ContextType>;
-  IncrementNumberOfLikesReponse?: IncrementNumberOfLikesReponseResolvers<ContextType>;
-  IncrementTrackViewReponse?: IncrementTrackViewReponseResolvers<ContextType>;
   Like?: LikeResolvers<ContextType>;
   LikeResponse?: LikeResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  People?: PeopleResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   SignInResponse?: SignInResponseResolvers<ContextType>;
-  Track?: TrackResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 

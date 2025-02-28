@@ -1,4 +1,4 @@
-import { QueryResolvers, MutationResolvers } from "../types";
+import { QueryResolvers, MutationResolvers } from "../../types";
 
 export const createArticle: MutationResolvers["createArticle"] = async (
   _,

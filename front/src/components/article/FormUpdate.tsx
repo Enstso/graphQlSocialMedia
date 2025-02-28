@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Define the type for the handleSubmit prop
 interface UpdateArticleProps {

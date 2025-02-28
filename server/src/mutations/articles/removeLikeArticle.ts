@@ -1,4 +1,5 @@
 
+import { QueryResolvers, MutationResolvers } from "../../types";
 
 export const removeLikeArticle: MutationResolvers["removeLikeArticle"] = async (
   _,

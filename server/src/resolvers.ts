@@ -1,93 +1,26 @@
 import { createUser } from "./mutations/users/createUser.js";
 import { signIn } from "./mutations/users/signIn.js";
-import { Resolvers, Speciality } from "./types.js";
-import { getClosestColor } from "./utils/colors.js";
+import { Resolvers,  } from "./types.js";
 import { getArticles,getArticle } from "./services/Article.js";
-import { createArticle,updateArticle, deleteArticle, commentArticle,likeArticle,removeLikeArticle,deleteComment,getCommentsByArticle,getLikesByArticle } from "./services/Article.js";
-const doctorsData = [
-  {
-    name: 'Samia Mekame',
-    speciality: Speciality.Ophtalmologist,
-  },
-  {
-    name: 'Catherine Bedoy',
-    speciality: Speciality.Psychologist,
-  },
-];
-
-
-
+import { getCommentsByArticle,getLikesByArticle } from "./services/Article.js";
+import { getProfile } from "./services/Profile.js";
+import { createArticle} from "./mutations/articles/createArticle.js";
+import { updateArticle } from "./mutations/articles/updateArticle.js";
+import { deleteArticle } from "./mutations/articles/deleteArticle.js"; 
+import { commentArticle } from "./mutations/articles/commentArticle.js";
+import { likeArticle } from "./mutations/articles/likeArticle.js";
+import { removeLikeArticle } from "./mutations/articles/removeLikeArticle.js";
+import { deleteComment } from "./mutations/articles/deleteComment.js";
 export const resolvers: Resolvers = {
   Query: {
-    doctors: (_, {specialities}) => specialities ? doctorsData.filter(doctor => specialities.includes(doctor.speciality)) : doctorsData,
-    add: (_, {number1, number2}) => number1 + number2,
-    substract: (_, {number1, number2}) => number1 - number2,
-    multiply: (_, {number1, number2}) => number1 * number2,
-    divide: (_, {number1, number2}) => {
-      if (number2 === 0) {
-        throw new Error('cannot divide by 0')
-      }
-
-      return number1 / number2
-    },
-    closestColor: (_, {hexa}) => {
-      if (!(hexa.match(/^#[0-9a-fA-F]{6}/))) {
-        throw new Error('Provided hexa is not valid')
-      }
-      return getClosestColor(hexa, ["#FF5733", "#33FF57", "#3357FF"]);
-    },
-    getTracks: (_, __, {dataSources}) => {
-      return dataSources.trackAPI.getTracks()
-    },
-    getFilms: (_, __, {dataSources: {ghibliAPI}}) => ghibliAPI.getFilms(),
-    getPeople: (_, __, {dataSources: {ghibliAPI}}) => ghibliAPI.getPeople(),
     getArticles,
     getArticle,
     getCommentsByArticle,
-    getLikesByArticle
+    getLikesByArticle,
+    getProfile
   },
   Mutation: {
-    incrementTrackView: async (_, {id}, {dataSources: {trackAPI}}) => {
-      try {
-        const track = await trackAPI.incrementTrackViews(id);
-        const message = `incrementTrackViews successful! `
 
-  
-        return {
-          code: 200,
-          message,
-          success: true,
-          track
-        }
-      } catch {
-        return {
-          code: 304,
-          message: 'trackViews not incremented',
-          success: false,
-          track: null
-        }
-      }
-    },
-    incrementNumberOfLikes: async (_, {id}, {dataSources: {trackAPI}}) => {
-      try {
-        const track = await trackAPI.incrementNumberOfLikes(id);
-        const message = `incrementNumberOfLikes successful! `
-  
-        return {
-          code: 200,
-          message,
-          success: true,
-          track
-        }
-      } catch {
-        return {
-          code: 304,
-          message: 'numberOfLikes not incremented',
-          success: false,
-          track: null
-        }
-      }
-    },
     createUser,
     signIn,
     createArticle,
@@ -97,17 +30,5 @@ export const resolvers: Resolvers = {
     likeArticle,
     removeLikeArticle,
     deleteComment
-  },
-  Track: {
-    author: (parent, _, {dataSources}) => {
-      return dataSources.trackAPI.getAuthorBy(parent.authorId)
-    }
-  },
-  Film: {
-    people: ({people}, _, {dataSources: {ghibliAPI}}) => ghibliAPI.getPeopleByUrls(people),
-  },
-  People: {
-    eyeColor: ({eye_color}) => eye_color,
-    films: ({films}, _, {dataSources: {ghibliAPI}}) => ghibliAPI.getFilmsByUrls(films)
   },
 }

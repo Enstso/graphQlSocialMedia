@@ -1,3 +1,4 @@
+import { QueryResolvers, MutationResolvers } from "../../types";
 
 export const deleteComment: MutationResolvers["deleteComment"] = async (
   _,

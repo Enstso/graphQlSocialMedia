@@ -1,3 +1,5 @@
+import { QueryResolvers, MutationResolvers } from "../../types";
+
 export const updateArticle: MutationResolvers["updateArticle"] = async (
   _,
   { id, title, content },
