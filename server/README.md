@@ -25,8 +25,8 @@ Le backend utilise **Apollo Server**, **GraphQL**, et **Prisma** pour la gestion
 
 ### 1. Cloner le projet
 ```sh
-git clone https://github.com/ton-repo/ton-projet.git
-cd ton-projet/server
+git clone https://github.com/Enstso/graphQlSocialMedia.git
+cd graphQlSocialMedia
 ```
 
 ### 2. Installer les dépendances
