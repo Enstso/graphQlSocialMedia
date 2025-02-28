@@ -24,6 +24,7 @@ export default function Login() {
   const [signIn, { loading }] = useMutation(SIGN_IN_MUTATION, {
     onCompleted: (data) => {
       if (data.signIn.success) {
+        localStorage.setItem("user",username);
         localStorage.setItem("token", data.signIn.token ?? "");
         navigate("/dashboard");
       } else {
