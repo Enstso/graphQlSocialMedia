@@ -141,16 +141,3 @@ mutation {
 
 ---
 
-## Contributions
-Les contributions sont les bienvenues ! Assurez-vous de suivre les bonnes pratiques et d'inclure des tests lorsque nécessaire.
-
----
-
-## Licence
-Ce projet est sous licence MIT.
-
----
-
-## Auteur
-- **Ton Nom** - [Ton GitHub](https://github.com/ton-github)
-
