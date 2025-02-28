@@ -31,6 +31,7 @@ cd graphQlSocialMedia
 
 ### 2. Installer les dépendances
 ```sh
+cd server
 npm install
 ```
 
