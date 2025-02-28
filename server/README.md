@@ -51,6 +51,12 @@ npx prisma generate
 npx prisma migrate dev --name init
 ```
 
+### 5. Pour lancer le seeder
+```sh
+npm run seed
+```
+
+
 ### 6. Lancer le serveur en mode développement
 ```sh
 npm run dev

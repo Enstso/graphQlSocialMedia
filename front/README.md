@@ -42,11 +42,7 @@ Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs
    ```bash
    npm install
    ```
-
-3. **Configurer l'URL du serveur GraphQL**
-   - Copier le fichier `.env.example` en `.env`
-   - Modifier la variable `VITE_GRAPHQL_API_URL` pour pointer vers le backend
-
+   
 4. **Lancer l'application**
    ```bash
    npm run dev
