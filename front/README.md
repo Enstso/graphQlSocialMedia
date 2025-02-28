@@ -3,6 +3,8 @@
 
 Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs de s'inscrire, publier des articles, commenter et liker les publications.
 
+
+-
 ## 🚀 Technologies utilisées
 
 - **React** - Framework pour la construction de l'interface utilisateur
@@ -42,7 +44,7 @@ Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs
    ```bash
    npm install
    ```
-   
+
 4. **Lancer l'application**
    ```bash
    npm run dev
@@ -82,6 +84,16 @@ query GetArticles {
   }
 }
 ```
+
+# Routes à tester
+
+- http://localhost:5173/
+- http://localhost:5173/articles
+- http://localhost:5173/login
+- http://localhost:5173/register
+- http://localhost:5173/articles/create
+- http://localhost:5173/articles/update/1127e1cc-49f0-424b-8044-5ae54dfb53cf
+- http://localhost:5173/article/1127e1cc-49f0-424b-8044-5ae54dfb53cf
 
 ## ✅ Améliorations futures
 - Ajout d'une messagerie privée entre utilisateurs
