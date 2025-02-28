@@ -36,7 +36,7 @@ npm install
 ```
 
 ### 3. Configurer l'environnement
-Tranformer le `.env-exemple`  un fichier `.env` 
+Tranformer le `.env.exemple`  un fichier `.env` 
 
 ### 4. Lancer la base de données avec Docker (obligatoire)
 Si vous souhaitez exécuter MariaDB et phpMyAdmin en conteneur Docker, utilisez la commande suivante :
