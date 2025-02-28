@@ -1,50 +1,101 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Social Network Frontend
 
-Currently, two official plugins are available:
+Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs de s'inscrire, publier des articles, commenter et liker les publications.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Technologies utilisées
 
-## Expanding the ESLint configuration
+- **React** - Framework pour la construction de l'interface utilisateur
+- **Apollo Client** - Gestion des requêtes GraphQL
+- **GraphQL Codegen** - Génération automatique des hooks/types à partir du schéma GraphQL
+- **TailwindCSS** - Pour le stylisme de l'interface
+- **React Router** - Gestion de la navigation
+- **JWT (JSON Web Token)** - Gestion de l'authentification
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📌 Fonctionnalités
 
-- Configure the top-level `parserOptions` property like this:
+- **Authentification des Utilisateurs**
+  - Inscription et connexion avec validation
+  - Gestion des sessions utilisateur via JWT
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Gestion des Articles**
+  - Création, affichage, modification et suppression d'articles
+  - Affichage des articles avec leur auteur, contenu, commentaires et likes
+
+- **Interactions avec les Articles**
+  - Ajout et affichage des commentaires
+  - Système de "like" pour les articles
+
+- **Navigation et Filtrage**
+  - Vue des derniers articles publiés sur la page d'accueil
+  - Filtrage des articles par auteur ou popularité (nombre de likes)
+
+## 📦 Installation et Configuration
+
+1. **Cloner le dépôt**
+   ```bash
+   git clone https://github.com/ton-projet/social-network-frontend.git
+   cd social-network-frontend
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
+
+3. **Configurer l'URL du serveur GraphQL**
+   - Copier le fichier `.env.example` en `.env`
+   - Modifier la variable `VITE_GRAPHQL_API_URL` pour pointer vers le backend
+
+4. **Lancer l'application**
+   ```bash
+   npm run dev
+   ```
+
+## 📂 Structure du Projet
+
+```
+/social-network-frontend
+│-- /src
+│   │-- /components  # Composants UI réutilisables
+│   │-- /views       # Pages principales (Accueil, Connexion, etc.)
+│   │-- /gql         # Hooks et requêtes GraphQL
+│   │-- /context     # Contexte global (AuthProvider, etc.)
+│   │-- /styles      # Fichiers de style
+│-- /public         # Assets publics (images, favicon...)
+│-- .env.example    # Exemple de configuration d'environnement
+│-- package.json    # Fichier de configuration npm
+│-- README.md       # Documentation du projet
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🛠️ Requêtes GraphQL
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Les requêtes et mutations GraphQL sont définies dans `/src/gql/queries.ts` et `/src/gql/mutations.ts`, puis utilisées avec Apollo Client.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Exemple de requête pour récupérer les articles :
+```graphql
+query GetArticles {
+  articles {
+    id
+    title
+    content
+    author {
+      name
+    }
+    likes {
+      id
+    }
+  }
+}
 ```
+
+## ✅ Améliorations futures
+- Ajout d'une messagerie privée entre utilisateurs
+- Système de notifications pour les nouveaux commentaires et likes
+- Mode sombre pour une meilleure expérience utilisateur
+
+## 📄 Licence
+Ce projet est sous licence MIT.
+```
+
+Vous pouvez copier ce code dans votre fichier `README.md`.
