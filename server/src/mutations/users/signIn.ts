@@ -1,30 +1,34 @@
+import { MutationResolvers } from "../../types";
 import { comparePassword, createJWT } from "../../modules/auth.js";
-import { MutationResolvers } from "../../types.js";
 
-export const signIn: MutationResolvers['signIn'] = async (_, {username, password}, {dataSources}, __) => {
-  try {
-    const user = await dataSources.db.user.findFirstOrThrow({where: {username}});
-    const isValidPassword = await comparePassword(password, user.password)
 
-    if (!isValidPassword) {
-      throw new Error('Invalid password')
+
+export const signIn: MutationResolvers['signIn'] =  async (_,{username,password},{dataSources}) => {
+    try{
+        const user = await dataSources.db.user.findFirstOrThrow({where:{username}});
+        const isValidPassword = await comparePassword(password,user.password);
+
+        if(!isValidPassword) {
+            return {
+                code: 401,
+                message: 'Invalid credentials',
+                success:false,
+                token:null
+            }
+        }
+        const token = createJWT(user);
+        return {
+            code:200,
+            message: 'connected',
+            success: true,
+            token: token
+        }
+    }catch {
+        return {
+            code:500,
+            message: 'error server',
+            success:false,
+            token:null
+        }
     }
-
-    const jwtToken = createJWT(user)
-
-    return {
-      code: 200,
-      message: 'user connected',
-      success: true,
-      token: jwtToken 
-    }
-
-  } catch (e) {
-    return {
-      code: 401,
-      message: (e as Error).message,
-      success: false,
-      token: null,
-    }
-  }
 }

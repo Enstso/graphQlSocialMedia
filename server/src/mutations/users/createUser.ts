@@ -1,30 +1,33 @@
-import { hashPassword } from "../../modules/auth.js";
 import { MutationResolvers } from "../../types.js";
-
-export const createUser: MutationResolvers['createUser'] = async (_, {username, password}, {dataSources: {db}}) => {
+import { hashPassword } from "../../modules/auth.js";
+export const createUser: MutationResolvers["createUser"] = async (
+  _,
+  { username, password },
+  context
+) => {
   try {
-    const createdUser = await db.user.create({
+    const createdUser = await context.dataSources.db.user.create({
       data: {
         username,
-        password: await hashPassword(password)
-      }
-    })
-  
+        password: await hashPassword(password),
+      },
+    });
+
     return {
-      code: 201,
+      code: 200,
+      message: `User created`,
       success: true,
-      message: `user ${username} has been created`,
       user: {
         id: createdUser.id,
-        username: createdUser.username
-      }
-    }
+        username: createdUser.username,
+      },
+    };
   } catch {
     return {
-      code: 400,
-      message: 'User has not been created',
+      code: 500,
+      message: "Error server with your user",
       success: false,
-      user: null
-    }
+      user: null,
+    };
   }
-}
+};
