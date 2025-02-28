@@ -34,8 +34,8 @@ Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs
 
 1. **Cloner le dépôt**
    ```bash
-   git clone https://github.com/ton-projet/social-network-frontend.git
-   cd social-network-frontend
+   git clone  https://github.com/Enstso/graphQlSocialMedia.git
+   cd graphQlSocialMedia
    ```
 
 2. **Installer les dépendances**
