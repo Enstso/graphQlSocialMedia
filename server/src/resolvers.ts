@@ -109,5 +109,5 @@ export const resolvers: Resolvers = {
   People: {
     eyeColor: ({eye_color}) => eye_color,
     films: ({films}, _, {dataSources: {ghibliAPI}}) => ghibliAPI.getFilmsByUrls(films)
-  }
+  },
 }

@@ -5,7 +5,7 @@ export const getArticle: QueryResolvers["getArticle"] = async (
   { id },
   context
 ) => {
-  return context.dataSources.db.article.findUnique({
+  return context.dataSources.db.article.findUniqueOrThrow({
     where: { id },
     include: { author: true },
   });
@@ -96,7 +96,7 @@ export const updateArticle: MutationResolvers["updateArticle"] = async (
     }
 
     // Check if the article exists
-    const existingArticle = await dataSources.db.article.findUnique({
+    const existingArticle = await dataSources.db.article.findUniqueOrThrow({
       where: { id },
     });
 
@@ -160,7 +160,7 @@ export const deleteArticle: MutationResolvers["deleteArticle"] = async (
 
   try {
     // Check if the article exists
-    const article = await dataSources.db.article.findUnique({ where: { id } });
+    const article = await dataSources.db.article.findUniqueOrThrow({ where: { id } });
 
     if (!article) {
       return {
@@ -216,7 +216,7 @@ export const likeArticle: MutationResolvers["likeArticle"] = async (
 
   try {
     // Check if the user has already liked the article
-    const existingLike = await dataSources.db.like.findFirst({
+    const existingLike = await dataSources.db.like.findFirstOrThrow({
       where: {
         userId: user.id,
         articleId: id,
@@ -277,7 +277,7 @@ export const removeLikeArticle: MutationResolvers["removeLikeArticle"] = async (
   }
 
   try {
-    const like = await dataSources.db.like.findFirst({
+    const like = await dataSources.db.like.findFirstOrThrow({
       where: {
         articleId: id,
         userId: user.id,
@@ -367,7 +367,7 @@ export const deleteComment: MutationResolvers["deleteComment"] = async (
     };
   }
   try {
-    const comment = await dataSources.db.comment.findFirst({
+    const comment = await dataSources.db.comment.findFirstOrThrow({
       where: { id:id }
     });
 

@@ -1,14 +1,16 @@
 // prisma/seed.ts
 import { PrismaClient } from '@prisma/client';
+import { hashPassword } from '../src/modules/auth';
 
 const prisma = new PrismaClient();
 
 async function main() {
+
   // Créer un nouvel utilisateur
   const user = await prisma.user.create({
     data: {
       username: 'john_doe',
-      password: 'securepassword123',
+      password: await hashPassword('securepassword123'),
     },
   });
 
