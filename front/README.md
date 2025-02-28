@@ -93,9 +93,3 @@ query GetArticles {
 - Ajout d'une messagerie privée entre utilisateurs
 - Système de notifications pour les nouveaux commentaires et likes
 - Mode sombre pour une meilleure expérience utilisateur
-
-## 📄 Licence
-Ce projet est sous licence MIT.
-```
-
-Vous pouvez copier ce code dans votre fichier `README.md`.
