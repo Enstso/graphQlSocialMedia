@@ -60,8 +60,6 @@ Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs
 │   │-- /components  # Composants UI réutilisables
 │   │-- /views       # Pages principales (Accueil, Connexion, etc.)
 │   │-- /gql         # Hooks et requêtes GraphQL
-│   │-- /context     # Contexte global (AuthProvider, etc.)
-│   │-- /styles      # Fichiers de style
 │-- /public         # Assets publics (images, favicon...)
 │-- .env.example    # Exemple de configuration d'environnement
 │-- package.json    # Fichier de configuration npm
