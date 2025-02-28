@@ -4,7 +4,8 @@
 Ce projet est la partie frontend d'un réseau social permettant aux utilisateurs de s'inscrire, publier des articles, commenter et liker les publications.
 
 
--
+Le back est fonctionnel
+
 ## 🚀 Technologies utilisées
 
 - **React** - Framework pour la construction de l'interface utilisateur
@@ -96,6 +97,4 @@ query GetArticles {
 - http://localhost:5173/article/1127e1cc-49f0-424b-8044-5ae54dfb53cf
 
 ## ✅ Améliorations futures
-- Ajout d'une messagerie privée entre utilisateurs
-- Système de notifications pour les nouveaux commentaires et likes
-- Mode sombre pour une meilleure expérience utilisateur
+- le like n'est pas fonctionnel
