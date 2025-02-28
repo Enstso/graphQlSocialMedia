@@ -8,11 +8,13 @@ export const typeDefs = gql`
     multiply(number1: Float!, number2: Float!): Float!
     divide(number1: Float!, number2: Float!): Float
     closestColor(hexa: String!): String
+    getProfile(username:String!): User
     getTracks: [Track!]!
     getFilms: [Film]!
     getPeople: [People]!
     getArticles: [Article]!
     getArticle(id: ID!): Article
+    getArticlesByAuthor: [Article]!
     getCommentsByArticle(id: ID!): [Comment]!
     getLikesByArticle(id:ID!) : [Like]!
   
@@ -83,6 +85,7 @@ export const typeDefs = gql`
   type User {
     id: ID!
     username: String!
+    photo: String
   }
 
   type Track {
@@ -90,16 +93,12 @@ export const typeDefs = gql`
     thumbnail: String!
     title: String!
     description: String!
-    author: Author
+    author: User
     numberOfViews: Int
     numberOfLikes: Int
   }
 
-  type Author {
-    id: ID!
-    name: String!
-    photo: String!
-  }
+ 
 
   type Doctor {
     name: String
@@ -128,7 +127,7 @@ export const typeDefs = gql`
 
     type Like {
         id: ID!
-        user: User!
+        author: User!
         article: Article!
     }
 

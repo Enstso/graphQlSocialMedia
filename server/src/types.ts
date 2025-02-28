@@ -37,13 +37,6 @@ export type ArticleResponse = {
   success: Scalars['Boolean']['output'];
 };
 
-export type Author = {
-  __typename?: 'Author';
-  id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  photo: Scalars['String']['output'];
-};
-
 export type Comment = {
   __typename?: 'Comment';
   article: Article;
@@ -100,8 +93,8 @@ export type IncrementTrackViewReponse = {
 export type Like = {
   __typename?: 'Like';
   article: Article;
+  author: User;
   id: Scalars['ID']['output'];
-  user: User;
 };
 
 export type LikeResponse = {
@@ -204,10 +197,12 @@ export type Query = {
   doctors?: Maybe<Array<Maybe<Doctor>>>;
   getArticle?: Maybe<Article>;
   getArticles: Array<Maybe<Article>>;
+  getArticlesByAuthor: Array<Maybe<Article>>;
   getCommentsByArticle: Array<Maybe<Comment>>;
   getFilms: Array<Maybe<Film>>;
   getLikesByArticle: Array<Maybe<Like>>;
   getPeople: Array<Maybe<People>>;
+  getProfile?: Maybe<User>;
   getTracks: Array<Track>;
   multiply: Scalars['Float']['output'];
   substract: Scalars['Float']['output'];
@@ -251,6 +246,11 @@ export type QueryGetLikesByArticleArgs = {
 };
 
 
+export type QueryGetProfileArgs = {
+  username: Scalars['String']['input'];
+};
+
+
 export type QueryMultiplyArgs = {
   number1: Scalars['Float']['input'];
   number2: Scalars['Float']['input'];
@@ -277,7 +277,7 @@ export enum Speciality {
 
 export type Track = {
   __typename?: 'Track';
-  author?: Maybe<Author>;
+  author?: Maybe<User>;
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   numberOfLikes?: Maybe<Scalars['Int']['output']>;
@@ -289,6 +289,7 @@ export type Track = {
 export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
+  photo?: Maybe<Scalars['String']['output']>;
   username: Scalars['String']['output'];
 };
 
@@ -365,7 +366,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Article: ResolverTypeWrapper<Article>;
   ArticleResponse: ResolverTypeWrapper<ArticleResponse>;
-  Author: ResolverTypeWrapper<AuthorModel>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Comment: ResolverTypeWrapper<Comment>;
   CommentResponse: ResolverTypeWrapper<CommentResponse>;
@@ -393,7 +393,6 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Article: Article;
   ArticleResponse: ArticleResponse;
-  Author: AuthorModel;
   Boolean: Scalars['Boolean']['output'];
   Comment: Comment;
   CommentResponse: CommentResponse;
@@ -431,13 +430,6 @@ export type ArticleResponseResolvers<ContextType = Context, ParentType extends R
   code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type AuthorResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Author'] = ResolversParentTypes['Author']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  photo?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -496,8 +488,8 @@ export type IncrementTrackViewReponseResolvers<ContextType = Context, ParentType
 
 export type LikeResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Like'] = ResolversParentTypes['Like']> = {
   article?: Resolver<ResolversTypes['Article'], ParentType, ContextType>;
+  author?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -538,10 +530,12 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   doctors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Doctor']>>>, ParentType, ContextType, Partial<QueryDoctorsArgs>>;
   getArticle?: Resolver<Maybe<ResolversTypes['Article']>, ParentType, ContextType, RequireFields<QueryGetArticleArgs, 'id'>>;
   getArticles?: Resolver<Array<Maybe<ResolversTypes['Article']>>, ParentType, ContextType>;
+  getArticlesByAuthor?: Resolver<Array<Maybe<ResolversTypes['Article']>>, ParentType, ContextType>;
   getCommentsByArticle?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType, RequireFields<QueryGetCommentsByArticleArgs, 'id'>>;
   getFilms?: Resolver<Array<Maybe<ResolversTypes['Film']>>, ParentType, ContextType>;
   getLikesByArticle?: Resolver<Array<Maybe<ResolversTypes['Like']>>, ParentType, ContextType, RequireFields<QueryGetLikesByArticleArgs, 'id'>>;
   getPeople?: Resolver<Array<Maybe<ResolversTypes['People']>>, ParentType, ContextType>;
+  getProfile?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetProfileArgs, 'username'>>;
   getTracks?: Resolver<Array<ResolversTypes['Track']>, ParentType, ContextType>;
   multiply?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QueryMultiplyArgs, 'number1' | 'number2'>>;
   substract?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<QuerySubstractArgs, 'number1' | 'number2'>>;
@@ -556,7 +550,7 @@ export type SignInResponseResolvers<ContextType = Context, ParentType extends Re
 };
 
 export type TrackResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Track'] = ResolversParentTypes['Track']> = {
-  author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   numberOfLikes?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -568,6 +562,7 @@ export type TrackResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  photo?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -575,7 +570,6 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 export type Resolvers<ContextType = Context> = {
   Article?: ArticleResolvers<ContextType>;
   ArticleResponse?: ArticleResponseResolvers<ContextType>;
-  Author?: AuthorResolvers<ContextType>;
   Comment?: CommentResolvers<ContextType>;
   CommentResponse?: CommentResponseResolvers<ContextType>;
   CreateUserResponse?: CreateUserResponseResolvers<ContextType>;

@@ -40,8 +40,8 @@ model Like {
   id        String     @id @unique @default(uuid())
   article   Article @relation(fields: [articleId], references: [id])
   articleId String
-  user      User    @relation(fields: [userId], references: [id])
-  userId String
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId String
 }
 
 model Article {
@@ -59,6 +59,7 @@ model User {
   id        String     @id @unique @default(uuid())
   username  String     @unique
   password  String
+  photo  String @default("")
   articles Article[]
   likes Like[]
   comments Comment[]

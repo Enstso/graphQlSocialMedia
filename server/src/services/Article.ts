@@ -31,7 +31,7 @@ export const getCommentsByArticle:QueryResolvers['getCommentsByArticle'] = async
 export const getLikesByArticle: QueryResolvers["getLikesByArticle"] = async (_,{id},context)=>{
   return context.dataSources.db.like.findMany({
     where:{articleId:id},
-    include:{user:true,article:{include:{
+    include:{author:true,article:{include:{
       author:true
     }}}
   });
@@ -218,7 +218,7 @@ export const likeArticle: MutationResolvers["likeArticle"] = async (
     // Check if the user has already liked the article
     const existingLike = await dataSources.db.like.findFirstOrThrow({
       where: {
-        userId: user.id,
+        authorId: user.id,
         articleId: id,
       },
     });
@@ -234,7 +234,7 @@ export const likeArticle: MutationResolvers["likeArticle"] = async (
     // Create a like
     const like = await dataSources.db.like.create({
       data: {
-        userId: user.id,
+        authorId: user.id,
         articleId: id,
       },
       include: {
@@ -243,7 +243,7 @@ export const likeArticle: MutationResolvers["likeArticle"] = async (
             author: true,
           },
         },
-        user: true,
+        author: true,
       },
     });
 
@@ -280,7 +280,7 @@ export const removeLikeArticle: MutationResolvers["removeLikeArticle"] = async (
     const like = await dataSources.db.like.findFirstOrThrow({
       where: {
         articleId: id,
-        userId: user.id,
+        authorId: user.id,
       },
     });
 
