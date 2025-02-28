@@ -143,5 +143,4 @@ mutation {
 
 ---
 
-## ✅ Améliorations futures
 
