@@ -35,12 +35,7 @@ npm install
 ```
 
 ### 3. Configurer l'environnement
-Créer un fichier `.env` à la racine du projet et y ajouter :
-```env
-DB_PASSWORD=tonmotdepasse
-DB_DATABASE=tonbasededonnees
-JWT_SECRET=tonsecret
-```
+Tranformer le `.env-exemple`  un fichier `.env` 
 
 ### 4. Lancer la base de données avec Docker (obligatoire)
 Si vous souhaitez exécuter MariaDB et phpMyAdmin en conteneur Docker, utilisez la commande suivante :
