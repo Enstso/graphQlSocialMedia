@@ -15,17 +15,17 @@ export default function Navbar() {
         </div>
         <ul className="hidden md:flex space-x-6">
           <li><a href="#" className="hover:underline">Home</a></li>
-          <li><a href="#" className="hover:underline">About</a></li>
-          <li><a href="#" className="hover:underline">Services</a></li>
-          <li><a href="#" className="hover:underline">Contact</a></li>
+          <li><a href="#" className="hover:underline">My articles</a></li>
+          <li><a href="#" className="hover:underline">My comments</a></li>
+          <li><a href="#" className="hover:underline">Profile</a></li>
         </ul>
       </div>
       {isOpen && (
         <ul className="md:hidden mt-4 space-y-4 text-center">
           <li><a href="#" className="block hover:underline">Home</a></li>
-          <li><a href="#" className="block hover:underline">About</a></li>
-          <li><a href="#" className="block hover:underline">Services</a></li>
-          <li><a href="#" className="block hover:underline">Contact</a></li>
+          <li><a href="#" className="block hover:underline">My articles</a></li>
+          <li><a href="#" className="block hover:underline">My comments</a></li>
+          <li><a href="#" className="block hover:underline">Profile</a></li>
         </ul>
       )}
     </nav>

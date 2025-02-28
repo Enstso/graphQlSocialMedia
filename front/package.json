@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.1",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
+    "dotenv": "^16.4.7",
     "graphql": "^16.10.0",
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",

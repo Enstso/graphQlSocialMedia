@@ -14,10 +14,14 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
+    "\n  query GetArticle($getArticleId: ID!) {\n    getArticle(id: $getArticleId) {\n      id\n      title\n      content\n      author {\n        username\n        photo\n      }\n      likes {\n        id\n      }\n      comments {\n        content\n        author {\n          username\n          photo\n        }\n      }\n    }\n  }\n": typeof types.GetArticleDocument,
+    "\n  query GetArticles {\n    getArticles {\n      id\n      content\n      title\n      author {\n        username\n      }\n    }\n  }\n": typeof types.GetArticlesDocument,
     "\n  mutation signIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n      success\n      message\n      code\n    }\n  }\n": typeof types.SignInDocument,
     "\n  mutation CreateUser($username: String!, $password: String!) {\n    createUser(username: $username, password: $password) {\n      code\n      message\n      success\n      user {\n        username\n      }\n    }\n  }\n": typeof types.CreateUserDocument,
 };
 const documents: Documents = {
+    "\n  query GetArticle($getArticleId: ID!) {\n    getArticle(id: $getArticleId) {\n      id\n      title\n      content\n      author {\n        username\n        photo\n      }\n      likes {\n        id\n      }\n      comments {\n        content\n        author {\n          username\n          photo\n        }\n      }\n    }\n  }\n": types.GetArticleDocument,
+    "\n  query GetArticles {\n    getArticles {\n      id\n      content\n      title\n      author {\n        username\n      }\n    }\n  }\n": types.GetArticlesDocument,
     "\n  mutation signIn($username: String!, $password: String!) {\n    signIn(username: $username, password: $password) {\n      token\n      success\n      message\n      code\n    }\n  }\n": types.SignInDocument,
     "\n  mutation CreateUser($username: String!, $password: String!) {\n    createUser(username: $username, password: $password) {\n      code\n      message\n      success\n      user {\n        username\n      }\n    }\n  }\n": types.CreateUserDocument,
 };
@@ -36,6 +40,14 @@ const documents: Documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetArticle($getArticleId: ID!) {\n    getArticle(id: $getArticleId) {\n      id\n      title\n      content\n      author {\n        username\n        photo\n      }\n      likes {\n        id\n      }\n      comments {\n        content\n        author {\n          username\n          photo\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetArticle($getArticleId: ID!) {\n    getArticle(id: $getArticleId) {\n      id\n      title\n      content\n      author {\n        username\n        photo\n      }\n      likes {\n        id\n      }\n      comments {\n        content\n        author {\n          username\n          photo\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetArticles {\n    getArticles {\n      id\n      content\n      title\n      author {\n        username\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetArticles {\n    getArticles {\n      id\n      content\n      title\n      author {\n        username\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

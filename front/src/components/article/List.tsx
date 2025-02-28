@@ -9,8 +9,6 @@ export default function ListArticles({ articles }:any) {
               <p className="text-gray-700 mt-2">{article.content.substring(0, 100)}...</p>
               <p className="text-sm text-gray-500 mt-2">By {article.author.name}</p>
               <div className="mt-4 flex justify-between text-sm text-gray-600">
-                <span>{article.comments.length} Comments</span>
-                <span>{article.likes.length} Likes</span>
               </div>
             </div>
           ))}
