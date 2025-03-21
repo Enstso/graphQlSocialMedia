@@ -1,7 +1,3 @@
-Here’s the combined README for the full social network project (both backend and frontend) in English:
-
----
-
 # Social Network GraphQL
 
 This project is a complete social network where users can register, post articles, comment on other users' posts, and "like" articles. It is divided into two parts: the **Backend** and the **Frontend**.
