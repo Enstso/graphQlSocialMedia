@@ -1,6 +1,6 @@
-# Social Network GraphQL
+# Social Media GraphQL
 
-This project is a complete social network where users can register, post articles, comment on other users' posts, and "like" articles. It is divided into two parts: the **Backend** and the **Frontend**.
+This project is a complete social media where users can register, post articles, comment on other users' posts, and "like" articles. It is divided into two parts: the **Backend** and the **Frontend**.
 
 ## 🚀 Technologies Used
 
@@ -124,7 +124,7 @@ This project is a complete social network where users can register, post article
 
 ```
 /graphQlSocialMedia
-│-- /server          # Backend - Social Network GraphQL
+│-- /server          # Backend - Social Media GraphQL
 │   │-- /src
 │   │   │-- /graphql # GraphQL code (resolvers, schemas, etc.)
 │   │   │-- /prisma  # Prisma (models and migrations)
